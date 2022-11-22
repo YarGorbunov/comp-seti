@@ -1,0 +1,4 @@
+﻿  client.cpp
+C:\comp-seti\udp\Project1\Project2\client.cpp(79,52): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\comp-seti\udp\Project1\Project2\client.cpp(119,104): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  Project2.vcxproj -> C:\comp-seti\udp\Project1\x64\Debug\client.exe

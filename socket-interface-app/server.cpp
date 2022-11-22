@@ -3,7 +3,9 @@
 #include <string>
 #include <windows.h>
 #pragma comment (lib, "Ws2_32.lib")
+#pragma warning (disable: 4996)
 using namespace std;
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SRV_PORT 1234 //server port
 #define BUF_SIZE 64 //buffer size
 int main(){
