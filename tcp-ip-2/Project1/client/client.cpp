@@ -82,6 +82,15 @@ int main()
     char buf[BUF_SIZE] = { 0 };
     do
     {
+        bool flag;
+        packet_size = recv(ClntSock, (char*)&flag, sizeof(bool), 0);
+        if (packet_size == SOCKET_ERROR) {
+            cout << "Can't recieve message from Server. Error # " << WSAGetLastError() << endl;
+            closesocket(ClntSock);
+            WSACleanup();
+            system("pause");
+            return 1;
+        }
         cout << "Your (client) request to server, number of students.If you wish to exit enter negative number: ";
         int n;
         cin >> n;

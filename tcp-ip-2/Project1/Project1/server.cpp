@@ -109,6 +109,13 @@ int main() {
             cout << "Connection to a client established successfully" << endl;
 
         while (true) {
+            bool flag = 1;
+            packet_size = send(ClientConn, (char*)&flag, sizeof(bool), 0);
+            if (packet_size == SOCKET_ERROR) {
+                cout << "Can't send message. Error # " << WSAGetLastError() << endl;
+                closesocket(ClientConn);
+                break;
+            }
             int n; //количество студентов
             packet_size = recv(ClientConn, (char*)&n, sizeof(int), 0);
             if (packet_size == SOCKET_ERROR) {

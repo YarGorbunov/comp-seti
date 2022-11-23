@@ -22,6 +22,18 @@ struct ArrayStudents {
     Student* students;
 };
 
+bool equals(sockaddr_in a, sockaddr_in b) {
+    if (ntohs(a.sin_port) != ntohs(b.sin_port)) return false;
+    char ipstr_a[INET6_ADDRSTRLEN];
+    inet_ntop(AF_INET, &a.sin_addr, (PSTR)ipstr_a, sizeof(ipstr_a));
+    char ipstr_b[INET6_ADDRSTRLEN];
+    inet_ntop(AF_INET, &a.sin_addr, (PSTR)ipstr_b, sizeof(ipstr_b));
+    for (int i = 0; i < INET6_ADDRSTRLEN; i++) {
+        if (ipstr_a[i] != ipstr_b[i]) return false;
+    }
+    return true;
+}
+
 int main()
 {
 
@@ -126,10 +138,12 @@ int main()
             return 1;
         }
 
-        sockaddr newInfo; //Ïîñêîëüêó ìû ðàáîòàåì â äåéòàãðàììíûõ ñîêåòàõ, òåõíè÷åñêè ìû ìîæåì ñëóøàòü íå òîëüêî ñåðâåð, íî è êîãî óãîäíî, à ïîòîìó ñîçäà¸ì íîâûé adr, êîòîðûé áóäåò çàïîëíÿòüñÿ äàííûìè îòïðàâèòåëÿ â recvfrom 
+        sockaddr_in newInfo; //Ïîñêîëüêó ìû ðàáîòàåì â äåéòàãðàììíûõ ñîêåòàõ, òåõíè÷åñêè ìû ìîæåì ñëóøàòü íå òîëüêî ñåðâåð, íî è êîãî óãîäíî, à ïîòîìó ñîçäà¸ì íîâûé adr, êîòîðûé áóäåò çàïîëíÿòüñÿ äàííûìè îòïðàâèòåëÿ â recvfrom 
         int newInfoSize = sizeof(newInfo); //recvfrom òðåáóåò èìåííî óêàçàòåëü, ïîýòîìó ïðèõîäèòñÿ òàê ÿâíî îáúÿâëÿòü
         result = new int[mst.students_n];
-        packet_size = recvfrom(ClntSock, (char*)result, mst.students_n*sizeof(int), 0, (sockaddr*)&newInfo, &newInfoSize); // !!
+        do {
+            packet_size = recvfrom(ClntSock, (char*)result, mst.students_n * sizeof(int), 0, (sockaddr*)&newInfo, &newInfoSize); // !!
+        } while (!equals(srvInfo,newInfo));
         if (packet_size == SOCKET_ERROR) {
             cout << "Can't recieve message from Server. Error # " << WSAGetLastError() << endl;
             closesocket(ClntSock);
