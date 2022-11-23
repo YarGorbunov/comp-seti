@@ -5,10 +5,7 @@
 #include <WS2tcpip.h>//для использования интерфейсов для работы с протоколом tcp/ip
 #pragma comment (lib, "Ws2_32.lib")//системная библиотека
 #include <vector>
-//#pragma warning(disable: 4996)
-//g++ server.cpp -o server.exe -lws2_32
 using namespace std;
-//#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SRV_PORT 1234 //server port
 #define BUF_SIZE 1024 //buffer size
 
@@ -40,7 +37,7 @@ int main() {
     else
         cout << "WinSock initialization is OK" << endl;
 
-    SOCKET ServSock = socket(AF_INET, SOCK_STREAM, 0);//инициализация сокета AF_INET означает что используем систему адресов IPv4, SOCK_STREAM что TCP, необязательный параметр если указываем значение для TCP или UDP
+    SOCKET ServSock = socket(AF_INET, SOCK_STREAM, 0);//инициализация сокета. AF_INET означает что используем систему адресов IPv4, SOCK_STREAM что TCP, необязательный параметр если указываем значение для TCP или UDP
     if (ServSock == INVALID_SOCKET) {
         cout << "Error initialization socket # " << WSAGetLastError() << endl;
         closesocket(ServSock);
@@ -95,11 +92,11 @@ int main() {
     ZeroMemory(&clientInfo, sizeof(clientInfo));
     int clientInfo_size = sizeof(clientInfo);
 
-    short packet_size = 0;
+    short packet_size = 0;//в эту переменнную будет записываться сколько байт информации получили от клиента
 
     char buf[BUF_SIZE] = { 0 };
     while (true) {
-        SOCKET ClientConn = accept(ServSock, (sockaddr*)&clientInfo, &clientInfo_size);//accept ждет пока к сокету что-нибудь подключится и возвращает подключившийся сокет
+        SOCKET ClientConn = accept(ServSock, (sockaddr*)&clientInfo, &clientInfo_size);//accept извлекает подключившийся сокет из очереди и возвращает его
         if (ClientConn == INVALID_SOCKET) {
             cout << "Client detected, but can't connect to a client. Error # " << WSAGetLastError() << endl;
             closesocket(ServSock);
@@ -112,7 +109,7 @@ int main() {
             cout << "Connection to a client established successfully" << endl;
 
         while (true) {
-            int n;
+            int n; //количество студентов
             packet_size = recv(ClientConn, (char*)&n, sizeof(int), 0);
             if (packet_size == SOCKET_ERROR) {
                 cout << "Can't recieve message. Error # " << WSAGetLastError() << endl;
