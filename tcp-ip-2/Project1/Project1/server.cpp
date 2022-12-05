@@ -123,7 +123,7 @@ int main() {
                 closesocket(ClientConn);
                 break;
             }
-            cout << n << endl;
+            //cout << n << endl;
             if (n < 0) break;
             msg.students = new Student[n];
             msg.students_n = n;
@@ -135,7 +135,7 @@ int main() {
                     closesocket(ClientConn);
                     break;
                 }
-                cout << packet_size << endl;
+                //cout << packet_size << endl;
                 char* name = new char[packet_size];
                 packet_size = recv(ClientConn, (char*)&name[0], packet_size, 0);
                 if (packet_size == SOCKET_ERROR) {
@@ -154,7 +154,7 @@ int main() {
                     closesocket(ClientConn);
                     break;
                 }
-                cout << packet_size << endl;
+                //cout << packet_size << endl;
                 int* marks = new int[packet_size/sizeof(int)];
                 packet_size = recv(ClientConn, (char*)&marks[0], packet_size, 0);
                 if (packet_size == SOCKET_ERROR) {

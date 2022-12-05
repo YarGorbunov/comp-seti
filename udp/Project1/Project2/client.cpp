@@ -107,27 +107,27 @@ int main()
         memcpy(mststr, &mst.students_n, sizeof(int));
         size_t sizeprev = sizeof(int);
         for (int i = 0; i < mst.students_n; i++) {
-            cout << "Name: ";
+            //cout << "Name: ";
             memcpy((mststr+sizeprev), &mst.students[i].name_n, sizeof(int));
             sizeprev += sizeof(int);
             for (int j = 0; j < mst.students[i].name_n; j++) {
-                cout << mst.students[i].name[j];
+                //cout << mst.students[i].name[j];
                 memcpy((mststr + sizeprev), &mst.students[i].name[j], sizeof(char));
                 sizeprev += sizeof(char);
             }
-            cout << endl << "Number of marks: " << mst.students[i].marks_n;
+            //cout << endl << "Number of marks: " << mst.students[i].marks_n;
             memcpy((mststr + sizeprev), &mst.students[i].marks_n, sizeof(int));
             sizeprev += sizeof(int);
             for (int j = 0; j < mst.students[i].marks_n; j++) {
-                cout << mst.students[i].marks[j];
+                //cout << mst.students[i].marks[j];
                 memcpy((mststr + sizeprev), &mst.students[i].marks[j], sizeof(int));
                 sizeprev += sizeof(int);
             }
-            cout << endl;
+            //cout << endl;
         }
-        for (int i = 0; i < size; i++) {
+        /*for (int i = 0; i < size; i++) {
             cout << mststr[i] << " ";
-        }
+        }*/
         packet_size = sendto(ClntSock, (char*)&mststr[0], size, 0, (sockaddr*)&srvInfo, sizeof(srvInfo));
 
         if (packet_size == SOCKET_ERROR) {

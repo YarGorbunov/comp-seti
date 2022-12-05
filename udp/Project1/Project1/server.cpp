@@ -101,9 +101,9 @@ int main() {
         char ipstr[INET6_ADDRSTRLEN];
         inet_ntop(AF_INET, &clientInfo.sin_addr, (PSTR)ipstr, sizeof(ipstr));
         cout << "Message was recieved from client: " << ipstr << ":" << ntohs(clientInfo.sin_port) << endl;
-        for (int i = 0; i < bufsize; i++) {
+        /*for (int i = 0; i < bufsize; i++) {
             cout << msgstr[i];
-        }
+        }*/
 
         int n;
         memcpy(&n, msgstr, sizeof(int));

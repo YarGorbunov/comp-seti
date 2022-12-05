@@ -1,0 +1,5 @@
+﻿  client.cpp
+C:\comp-seti\potoki\client\client.cpp(109,52): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+C:\comp-seti\potoki\client\client.cpp(149,64): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\comp-seti\potoki\client\client.cpp(28,10): warning C4101: buff: неиспользованная локальная переменная
+  client.vcxproj -> C:\comp-seti\potoki\x64\Debug\client.exe

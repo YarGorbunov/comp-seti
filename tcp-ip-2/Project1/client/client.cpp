@@ -125,8 +125,8 @@ int main()
             mst.students[i] = s;
         }
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < mst.students[i].name_n; j++)
-                cout << mst.students[i].name[j];
+            /*for (int j = 0; j < mst.students[i].name_n; j++)
+                cout << mst.students[i].name[j];*/
             packet_size = send(ClntSock, (char*)&mst.students[i].name[0], mst.students[i].name_n, 0);
             if (packet_size == SOCKET_ERROR) {
                 cout << "Can't send message to Server. Error # " << WSAGetLastError() << endl;
@@ -135,9 +135,9 @@ int main()
                 system("pause");
                 return 1;
             }
-            cout << endl << mst.students[i].name_n << " " << mst.students[i].marks_n << endl;
+            /*cout << endl << mst.students[i].name_n << " " << mst.students[i].marks_n << endl;
             for (int j = 0; j < mst.students[i].marks_n; j++)
-                cout << mst.students[i].marks[j] << " " << endl;
+                cout << mst.students[i].marks[j] << " " << endl;*/
             packet_size = send(ClntSock, (char*)&mst.students[i].marks[0], mst.students[i].marks_n * sizeof(int), 0);
             if (packet_size == SOCKET_ERROR) {
                 cout << "Can't send message to Server. Error # " << WSAGetLastError() << endl;
