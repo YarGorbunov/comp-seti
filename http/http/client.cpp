@@ -1,10 +1,13 @@
 #include <winsock2.h>
 #include <windows.h>
 #include <WS2tcpip.h>
-#pragma comment(lib, "Ws2_32.lib")
 #include <iostream>
-#define request "GET / HTTP/1.0 \r\nHost: www.json.org \r\n\r\n"
+
+#pragma comment(lib, "Ws2_32.lib")
+
+#define request "GET / HTTP/1.0 \r\nHost: 127.0.0.1 \r\n\r\n"
 #define MAX_PACKET_SIZE 4096
+
 using namespace std;
 
 int main() {
@@ -28,7 +31,6 @@ int main() {
     else
         cout << "Client socket initialization is OK" << endl;
 
-    //string hostname = "localhost";
     struct addrinfo hints, * res;
     struct in_addr addr;
 
@@ -36,7 +38,8 @@ int main() {
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_family = AF_INET;
 
-    erStat = getaddrinfo("www.json.org", NULL, &hints, &res);
+    // новый аналог gethostbyname()
+    erStat = getaddrinfo("127.0.0.1", NULL, &hints, &res);
     if (erStat != 0) {
         cout << "Error getting website information # ";
         cout << WSAGetLastError();
@@ -51,7 +54,7 @@ int main() {
     inet_ntop(AF_INET, &(serv_info->sin_addr), (PSTR)ipstr, sizeof(ipstr));
     cout << "Commencing connection via address: " << ipstr << endl;
 
-    serv_info->sin_port = htons(80);
+    serv_info->sin_port = htons(8000);
 
     erStat = connect(ClntSock, (sockaddr*)serv_info, sizeof(*serv_info));
     if (erStat != 0) {

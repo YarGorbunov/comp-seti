@@ -1,0 +1,3 @@
+﻿  client2.cpp
+C:\comp-seti\http\client2\client2.cpp(36,20): warning C4101: addr: неиспользованная локальная переменная
+  client2.vcxproj -> C:\comp-seti\http\x64\Debug\client2.exe

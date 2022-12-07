@@ -3,8 +3,10 @@
 #include <sstream>
 #include <windows.h>
 #include <WS2tcpip.h>
-#pragma comment(lib, "Ws2_32.lib")
 #include <iostream>
+
+#pragma comment(lib, "Ws2_32.lib")
+
 using namespace std;
 
 int main()
@@ -68,7 +70,7 @@ int main()
 
     const int max_client_buffer_size = 1024;
     char buf[max_client_buffer_size];
-    int ClntSock = INVALID_SOCKET;
+    long long unsigned int ClntSock = INVALID_SOCKET;
 
     while (true) {
         ClntSock = accept(ServSock, NULL, NULL);
@@ -81,8 +83,8 @@ int main()
 
         erStat = recv(ClntSock, buf, max_client_buffer_size, 0);
 
-        std::stringstream response; 
-        std::stringstream response_body; 
+        stringstream response;
+        stringstream response_body;
 
         if (erStat == SOCKET_ERROR) {
             cout << "Recieving data failed. Error # " << WSAGetLastError() << endl;
@@ -91,22 +93,25 @@ int main()
             return 1;
         }
         else if (erStat == 0) {
-            cout << "Connectiom was closed " << endl;
+            cout << "Connection was closed " << endl;
         }
         else if (erStat > 0) {
             buf[erStat] = '\0';
+
             response_body << "<title>Test C++ HTTP Server</title>\n"
                 << "<h1>Test page</h1>\n"
                 << "<p>This is body of the test page...</p>\n"
                 << "<h2>Request headers</h2>\n"
                 << "<pre>" << buf << "</pre>\n"
                 << "<em><small>Test C++ Http Server</small></em>\n";
+
             response << "HTTP/1.1 200 OK\r\n"
                 << "Version: HTTP/1.1\r\n"
                 << "Content-Type: text/html; charset=utf-8\r\n"
                 << "Content-Length: " << response_body.str().length()
                 << "\r\n\r\n"
                 << response_body.str();
+
             erStat = send(ClntSock, response.str().c_str(),
                 response.str().length(), 0);
 
