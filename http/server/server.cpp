@@ -14,7 +14,7 @@ int main()
     WSADATA wsData;
     int erStat = WSAStartup(MAKEWORD(2, 2), &wsData);
     if (erStat != 0) {
-        cout << "Error WinSock version initializaion # ";
+        cout << "Error WinSock initializaion # ";
         cout << WSAGetLastError();
         return 1;
     }
@@ -45,21 +45,27 @@ int main()
         return 1;
     }
     else
-        cout << "Server socket initialization is OK" << endl;
+        cout << "Server socket initialization is OK"
+        << endl;
 
     erStat = bind(ServSock, addr->ai_addr, (int)addr->ai_addrlen);
     if (erStat != 0) {
-        cout << "Error Socket binding to server. Error # " << WSAGetLastError() << endl;
+        cout << "Error Socket binding. Error # "
+            << WSAGetLastError() << endl;
         closesocket(ServSock);
         WSACleanup();
         return 1;
     }
     else
-        cout << "Binding socket to Server info is OK" << endl;
+        cout << "Binding socket to Server info is OK"
+        << endl;
 
     erStat = listen(ServSock, SOMAXCONN);
+
+
     if (erStat != 0) {
-        cout << "Can't start to listen to. Error # " << WSAGetLastError() << endl;
+        cout << "Can't start to listen to. Error # "
+            << WSAGetLastError() << endl;
         closesocket(ServSock);
         WSACleanup();
         return 1;
@@ -86,8 +92,10 @@ int main()
         stringstream response;
         stringstream response_body;
 
+
         if (erStat == SOCKET_ERROR) {
-            cout << "Recieving data failed. Error # " << WSAGetLastError() << endl;
+            cout << "Recieving data failed. Error # "
+                << WSAGetLastError() << endl;
             closesocket(ServSock);
             WSACleanup();
             return 1;
@@ -108,7 +116,8 @@ int main()
             response << "HTTP/1.1 200 OK\r\n"
                 << "Version: HTTP/1.1\r\n"
                 << "Content-Type: text/html; charset=utf-8\r\n"
-                << "Content-Length: " << response_body.str().length()
+                << "Content-Length: "
+                << response_body.str().length()
                 << "\r\n\r\n"
                 << response_body.str();
 
@@ -116,7 +125,7 @@ int main()
                 response.str().length(), 0);
 
             if (erStat == SOCKET_ERROR) {
-                cout << "Sending message failed. Error # " << WSAGetLastError() << endl;
+                cout << "Sending message failed. Error#" << WSAGetLastError() << endl;
                 closesocket(ServSock);
                 WSACleanup();
                 return 1;

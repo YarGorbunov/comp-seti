@@ -2,19 +2,32 @@
 #include <windows.h>
 #include <WS2tcpip.h>
 #include <iostream>
+#include <string>
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define request "GET / HTTP/1.0 \r\nHost: 127.0.0.1 \r\n\r\n"
 #define MAX_PACKET_SIZE 4096
 
 using namespace std;
 
 int main() {
+    int port = 80;
+    string path, website;
+    cout << "Enter path: ";
+    cin >> path;
+    if (path == "0")
+    {
+        path = "";
+        port = 8000;
+    }
+    cout << "Enter website: ";
+    cin >> website;
+    string request = "GET /" + path + " HTTP/1.0 \r\nHost: " + website + " \r\n\r\n";
+
     WSADATA wsData;
     int erStat = WSAStartup(MAKEWORD(2, 2), &wsData);
     if (erStat != 0) {
-        cout << "Error WinSock version initializaion # ";
+        cout << "Error WinSock initializaion # ";
         cout << WSAGetLastError();
         return 1;
     }
@@ -23,13 +36,15 @@ int main() {
 
     SOCKET ClntSock = socket(AF_INET, SOCK_STREAM, 0);
     if (ClntSock == INVALID_SOCKET) {
-        cout << "Error initialization socket # " << WSAGetLastError() << endl;
+        cout << "Error initialization socket # "
+            << WSAGetLastError() << endl;
         closesocket(ClntSock);
         WSACleanup();
         return 1;
     }
     else
-        cout << "Client socket initialization is OK" << endl;
+        cout << "Client socket initialization is OK"
+        << endl;
 
     struct addrinfo hints, * res;
     struct in_addr addr;
@@ -39,7 +54,7 @@ int main() {
     hints.ai_family = AF_INET;
 
     // новый аналог gethostbyname()
-    erStat = getaddrinfo("127.0.0.1", NULL, &hints, &res);
+    erStat = getaddrinfo(website.data(), NULL, &hints, &res);
     if (erStat != 0) {
         cout << "Error getting website information # ";
         cout << WSAGetLastError();
@@ -52,9 +67,10 @@ int main() {
 
     char ipstr[INET6_ADDRSTRLEN];
     inet_ntop(AF_INET, &(serv_info->sin_addr), (PSTR)ipstr, sizeof(ipstr));
-    cout << "Commencing connection via address: " << ipstr << endl;
+    cout << "Commencing connection via address: "
+        << ipstr << endl;
 
-    serv_info->sin_port = htons(8000);
+    serv_info->sin_port = htons(port);
 
     erStat = connect(ClntSock, (sockaddr*)serv_info, sizeof(*serv_info));
     if (erStat != 0) {
@@ -65,7 +81,7 @@ int main() {
     else
         cout << "Website connection is OK" << endl;
 
-    erStat = send(ClntSock, request, sizeof(request), 0);
+    erStat = send(ClntSock, request.data(), sizeof(char) * request.size(), 0);
 
     int len = 0;
     char buff[MAX_PACKET_SIZE];

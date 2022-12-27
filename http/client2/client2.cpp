@@ -79,5 +79,6 @@ int main() {
 
     if (SOCKET_ERROR == closesocket(ClntSock))
         return -1;
+    system("pause");
     return 1;
 }

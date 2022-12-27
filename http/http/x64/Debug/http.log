@@ -1,3 +1,4 @@
 ﻿  client.cpp
-C:\comp-seti\http\http\client.cpp(35,20): warning C4101: addr: неиспользованная локальная переменная
+C:\comp-seti\http\http\client.cpp(84,77): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\comp-seti\http\http\client.cpp(50,20): warning C4101: addr: неиспользованная локальная переменная
   http.vcxproj -> C:\comp-seti\http\x64\Debug\client.exe

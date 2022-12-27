@@ -1,3 +1,3 @@
 ﻿  server.cpp
-C:\comp-seti\http\server\server.cpp(116,43): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+C:\comp-seti\http\server\server.cpp(125,43): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
   server.vcxproj -> C:\comp-seti\http\x64\Debug\server.exe

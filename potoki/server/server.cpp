@@ -116,36 +116,7 @@ int main() {
         DWORD thID;
         CreateThread(NULL, NULL, ConToClient, &ClientConn, NULL, &thID);
 
-        /*
-        while (true) {
-            packet_size = recv(ClientConn, (char*)&buf, BUF_SIZE, 0);
-            buf[packet_size] = 0;
-            memcpy(msg, buf, sizeof(msg));
-            cout << "Message Recieved, Calculating The Result from: " << msg->productid << " " << msg->amount << endl;
-            if (msg->amount >= 0 && msg->productid >= 0)
-            {
-                result = msg->amount * msg->productid;
-                cout << result << endl;
-            }
-            else break;
-            packet_size = send(ClientConn, (char*)&result, sizeof(result), 0);
-            if (packet_size == SOCKET_ERROR) {
-                cout << "Can't send message. Error # " << WSAGetLastError() << endl;
-                closesocket(ClientConn);
-                WSACleanup();
-                return 1;
-            }
-        }
-        result = -1;
-        packet_size = send(ClientConn, (char*)&result, sizeof(result), 0);
-        if (packet_size == SOCKET_ERROR) {
-            cout << "Can't send message. Error # " << WSAGetLastError() << endl;
-            closesocket(ClientConn);
-            WSACleanup();
-            return 1;
-        }
-        cout << "The Client has disconnected" << endl;
-        closesocket(ClientConn);*/
+        
     }
     return 0;
 }

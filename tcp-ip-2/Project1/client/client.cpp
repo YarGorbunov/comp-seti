@@ -62,7 +62,7 @@ int main()
     servInfo.sin_addr = ip_to_num;
     servInfo.sin_port = htons(SRV_PORT);
 
-    erStat = connect(ClntSock, (sockaddr*)&servInfo, sizeof(servInfo));//аналог bind и accept только для клиента. Функция connect используется процессом-клиентом для установления связи с сервером.
+    erStat = connect(ClntSock, (sockaddr*)&servInfo, sizeof(servInfo));//Функция connect используется процессом-клиентом для установления связи с сервером.
     if (erStat != 0) {
         cout << "Connection to Server is FAILED. Error # " << WSAGetLastError() << endl;
         closesocket(ClntSock);
